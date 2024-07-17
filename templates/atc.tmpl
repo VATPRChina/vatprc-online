@@ -1,0 +1,111 @@
+<style>
+    .online-controller-list {
+        text-align: center;
+    }
+
+    .no-controller {
+        padding: 10px;
+        color: #FFF;
+        background-color: #b80108;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .controller {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        font-size: 13px;
+    }
+
+    .controller:nth-child(even) {
+        background: #fceeee;
+    }
+
+    .controller-callsign {
+        text-align: left;
+    }
+
+    .controller-name {
+        text-align: center;
+    }
+
+    .controller-frequency {
+        text-align: right;
+    }
+
+    .last-update {
+        font-size: 11px;
+        padding: 5px;
+        color: #333;
+    }
+
+    .frequency-text {
+        padding: 3px;
+        font-size: 13px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #d6dee1;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #d6dee1;
+        border-radius: 20px;
+        border: 6px solid transparent;
+        background-clip: content-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #a8bbbf;
+    }
+
+    .divider {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    }
+</style>
+
+<div class='online-controller-list'>
+    {{ if not .Controllers }}
+    <div class='no-controller'>No VATPRC controller currently online</div>
+
+    {{ else }}
+    <div class='has-controller'>
+        {{ range $el := .Controllers }}
+        <div class='controller'>
+            <div class='controller-callsign'>{{ $el.Callsign }}</div>
+            <div class='controller-name'>{{ $el.Name }}</div>
+            <div class='controller-frequency'>
+                <span class='frequency-text'>{{ $el.Frequency }}</span>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+
+    {{end}}
+
+    <hr class='divider' />
+    {{ if not .FutureControllers }}
+    <div class='no-controller'>No controller is scheduled to online in 7 days</div>
+
+    {{ else }}
+    <div class='has-controller'>
+        {{ range $el := .FutureControllers }}
+        <div class='controller'>
+            <div class='controller-callsign'>{{ $el.Callsign }}</div>
+            <div class='controller-name'>{{ $el.Name }}</div>
+            <div class='controller-frequency'>
+                <span>{{ $el.Start }} - {{ $el.End }}</span>
+            </div>
+        </div>
+        {{ end }}
+    </div>
+
+    {{ end }}
+</div>

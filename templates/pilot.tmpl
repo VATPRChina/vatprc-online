@@ -1,0 +1,69 @@
+<style>
+	.online-crew-list {
+		text-align: center;
+	}
+
+	.no-crew {
+		padding: 10px;
+		color: #FFF;
+		background-color: #b80108;
+		text-align: center;
+		font-size: 14px;
+	}
+
+	.crew {
+		display: grid;
+		grid-template-columns: auto auto auto;
+		padding: 0 5px;
+		font-size: 13px;
+	}
+
+    .crew:nth-child(even) {
+        background: #fceeee;
+    }
+
+	.crew-apt {
+		text-align: right;
+	}
+
+	.crew-cid {
+		text-align: center;
+	}
+
+	.crew-callsign {
+		text-align: left;
+		text-collor: #b80108;
+	}
+
+	.title-text {
+		padding: 3px;
+		font-size: 13px;
+		color: #b80108;
+	}
+
+	.last-update {
+		font-size: 11px;
+		padding: 5px;
+		color: #333;
+	}
+</style>
+
+<div class='online-crew-list'>
+    {{ if not .Pilots }}
+    <div class='no-crew'>No pilot is flying from/to VATPRC airports</div>
+
+    {{ else }}
+    <div class='has-crew'>
+        {{ range $el := .Pilots }}
+        <div class='crew'>
+            <div class='crew-callsign'> {{ $el.Callsign }}</div>
+            <div class='crew-cid'>
+                <span class='title-text'>{{ $el.Aircraft }}</span>
+            </div>
+            <div class='crew-apt'>{{ $el.Departure }} - {{ $el.Arrival }}</div>
+        </div>
+        {{ end }}
+    </div>
+
+    {{end}}
+</div>
