@@ -4,9 +4,10 @@ import (
 	"VatprcOnline/model"
 	"VatprcOnline/service"
 	"encoding/json"
-	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func getVatprcStatus() *model.VatprcStatus {
@@ -107,7 +108,7 @@ func main() {
 			vatprcStatus := getVatprcStatus()
 			vatprcStatus.FutureControllers = *getVatprcFutureAtc()
 			c.HTML(http.StatusOK, "atc.tmpl", gin.H{
-				"Controllers": vatprcStatus.Controllers,
+				"Controllers":       vatprcStatus.Controllers,
 				"FutureControllers": vatprcStatus.FutureControllers,
 			})
 		case "pilot":
@@ -120,5 +121,5 @@ func main() {
 		}
 	})
 
-	r.Run("127.0.0.1:9000")
+	r.Run("0.0.0.0:9000")
 }
